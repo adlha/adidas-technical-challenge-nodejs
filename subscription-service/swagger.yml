@@ -3,7 +3,6 @@ info:
   title: Subscription Service
   description: Private service API for Adidas newsletter subscriptions
   version: 1.0.0
-host: localhost:3000
 schemes:
   - http
 components:
@@ -35,10 +34,12 @@ paths:
       responses:
         200:
           description: A list with all subscriptions that match the request query.
-          schema: 
-            type: array
-            items:
-              $ref: '#/definitions/subscription'
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/definitions/subscription'
         400:
           $ref: '#/responses/BadRequest'
         500:
@@ -50,23 +51,26 @@ paths:
         - Subscriptions
       summary: Create a new subscription.
       description: Returns the id of the subscription if it was successfully created.
-      parameters:
-        - in: body
-          name: subscription
-          schema:
-            $ref: '#/definitions/subscription'
-          description: New subscription.
+      requestBody:
+        description: New subscription
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/subscription'
       produces:
         - application/json
       responses:
         201:
           description: Subscription created.
-          schema: 
-            type: object
-            properties:
-              _id:
-                type: string
-                example: idCKVbyVOAivWLar
+          content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                subscriptionId:
+                  type: string
+                  example: idCKVbyVOAivWLar
         400:
           $ref: '#/responses/BadRequest'
         500:
@@ -89,8 +93,10 @@ paths:
       responses:
         200:
           description: Subscription requested.
-          schema: 
-            $ref: '#/definitions/subscription'
+          content:
+            application/json:
+              schema: 
+                $ref: '#/definitions/subscription'
         404:
           $ref: '#/responses/NotFound'
         400:
@@ -125,18 +131,20 @@ paths:
 responses:
   BadRequest:
     description: Bad Request
-    schema:
-      $ref: '#/definitions/error'
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/error'
   NotFound:
     description: The subscription was not found
-    schema:
-      $ref: '#/definitions/error'
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/error'
   Unauthorized:
     description: Unauthorized
   ServerError:
     description: Server error
-    schema:
-      $ref: '#/definitions/error'
 definitions:
   error:
     type: object
@@ -152,9 +160,6 @@ definitions:
   subscription:
     type: object
     properties:
-      _id:
-        type: string
-        example: idCKVbyVOAivWLar
       email:
         type: string
         example: example@example.com

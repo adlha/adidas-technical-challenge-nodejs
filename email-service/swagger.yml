@@ -3,7 +3,6 @@ info:
   title: Email Service
   description: Private email API for email notifications
   version: 1.0.0
-host: localhost:3002
 schemes:
   - http
 components:
@@ -21,12 +20,13 @@ paths:
         - Emails
       summary: Send a new email.
       description: Sends a new email notification.
-      parameters:
-        - in: body
-          name: email
-          schema:
-            $ref: '#/definitions/email'
-          description: Email.
+      requestBody:
+        description: Email.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/email'
       produces:
         - application/json
       responses:
@@ -39,16 +39,14 @@ paths:
 responses:
   BadRequest:
     description: Bad Request
-    schema:
-      $ref: '#/definitions/error'
+    content:
+      application-json:
+        schema:
+          $ref: '#/definitions/error'
   Unauthorized:
     description: Unauthorized
-    schema:
-      $ref: '#/definitions/error'
   ServerError:
     description: Server error
-    schema:
-      $ref: '#/definitions/error'
 definitions:
   error:
     type: object
@@ -61,12 +59,34 @@ definitions:
         example: "7/2/2021 11:21:48"
     required:
       - error
-  email:
+  subscription:
     type: object
     properties:
       email:
         type: string
         example: example@example.com
+      newsletterId:
+        type: string
+        example: HKnhQiVMVgMal93d
+      firstName:
+        type: string
+        required: false
+        example: Name
+      gender:
+        type: string
+        required: false
+        example: F
+      dateOfBirth:
+        type: date
+        example: "1997-12-16"
+      consentFlag:
+        type: boolean
+        example: true
+  email:
+    type: object
+    properties:
+      subscription:
+        $ref: '#/definitions/subscription'
       emailBody:
         type: string
         example: Body of the email.
