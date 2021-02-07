@@ -3,11 +3,11 @@ This is the solution for the Adidas NodeJS Backend challenge.
 # Content
 
  1. [Requirements](#requirements)
- 2. [Build and run](Build%20and%20run)
+ 2. [Build and run](#Build%20and%20run)
  3. [Test](#test)
  4. [Use](#use)
-	 4.1. [Swagger](#swagger)
- 5. [Libraries](#libraries)
+ 5. [API Documentation](#api%20documentation)
+ 6. [Libraries](#libraries)
 
 # Requirements
 We need to create a newsletter subscription system with the following architecture of microservices:
