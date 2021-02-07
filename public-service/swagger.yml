@@ -1,0 +1,164 @@
+openapi: 3.0.0
+info:
+  title: Public Subscription Service
+  description: Public service API for Adidas newsletter subscriptions
+  version: 1.0.0
+host: localhost:3001
+schemes:
+  - http
+paths:
+  /subscriptions:
+    get:
+      tags:
+        - Subscriptions
+      summary: Get all subscriptions.
+      description: Returns a list with all active subscriptions. Accepts query parameters for filtering.
+      parameters:
+        - in: query
+          name: email
+          type: string
+          description: Subscription email.
+        - in: query
+          name: newsletterId
+          type: string
+          description: Subscription newsletterId.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: A list with all subscriptions that match the request query.
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/subscription'
+        400:
+          $ref: '#/responses/BadRequest'
+        500:
+          $ref: '#/responses/ServerError'
+    post:
+      tags:
+        - Subscriptions
+      summary: Create a new subscription.
+      description: Returns the id of the subscription if it was successfully created.
+      parameters:
+        - in: body
+          name: subscription
+          schema:
+            $ref: '#/definitions/subscription'
+          description: New subscription.
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Subscription created.
+          schema: 
+            type: object
+            properties:
+              _id:
+                type: string
+                example: idCKVbyVOAivWLar
+        400:
+          $ref: '#/responses/BadRequest'
+        500:
+          $ref: '#/responses/ServerError'
+  /subscriptions/{subscriptionId}:
+    get:
+      tags:
+        - Subscriptions
+      summary: Get a subscription by its id.
+      description: Returns the requested subscription if it exists.
+      parameters:
+        - in: path
+          name: subscriptionId
+          type: string
+          description: Subscription id.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Subscription requested.
+          schema: 
+            $ref: '#/definitions/subscription'
+        404:
+          $ref: '#/responses/NotFound'
+        400:
+          $ref: '#/responses/BadRequest'
+        500:
+          $ref: '#/responses/ServerError'
+    delete:
+      tags:
+        - Subscriptions
+      summary: Cancel a subscription.
+      description: Deletes the requested subscription.
+      parameters:
+        - in: path
+          name: subscriptionId
+          type: string
+          description: Subscription id.
+      produces:
+        - application/json
+      responses:
+        204:
+          description: Subscription cancelled.
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/ServerError' 
+responses:
+  BadRequest:
+    description: Bad Request
+    schema:
+      $ref: '#/definitions/error'
+  NotFound:
+    description: The subscription was not found
+    schema:
+      $ref: '#/definitions/error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/error'
+  ServerError:
+    description: Server error
+    schema:
+      $ref: '#/definitions/error'
+definitions:
+  error:
+    type: object
+    properties:
+      error:
+        type: string
+        example: "Error description"
+      timestamp:
+        type: string
+        example: "7/2/2021 11:21:48"
+    required:
+      - error
+  subscription:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: idCKVbyVOAivWLar
+      email:
+        type: string
+        example: example@example.com
+      newsletterId:
+        type: string
+        example: HKnhQiVMVgMal93d
+      firstName:
+        type: string
+        required: false
+        example: Name
+      gender:
+        type: string
+        required: false
+        example: F
+      dateOfBirth:
+        type: date
+        example: "1997-12-16"
+      consentFlag:
+        type: boolean
+        example: true
+

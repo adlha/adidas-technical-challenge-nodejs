@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: Email Service
+  description: Private email API for email notifications
+  version: 1.0.0
+host: localhost:3002
+schemes:
+  - http
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /emails:
+    post:
+      tags:
+        - Emails
+      summary: Send a new email.
+      description: Sends a new email notification.
+      parameters:
+        - in: body
+          name: email
+          schema:
+            $ref: '#/definitions/email'
+          description: Email.
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Email sent.
+        400:
+          $ref: '#/responses/BadRequest'
+        500:
+          $ref: '#/responses/ServerError'
+responses:
+  BadRequest:
+    description: Bad Request
+    schema:
+      $ref: '#/definitions/error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/error'
+  ServerError:
+    description: Server error
+    schema:
+      $ref: '#/definitions/error'
+definitions:
+  error:
+    type: object
+    properties:
+      error:
+        type: string
+        example: "Error description"
+      timestamp:
+        type: string
+        example: "7/2/2021 11:21:48"
+    required:
+      - error
+  email:
+    type: object
+    properties:
+      email:
+        type: string
+        example: example@example.com
+      emailBody:
+        type: string
+        example: Body of the email.
+

@@ -1,0 +1,8 @@
+{"email":"test2@example.com","firstName":"name","gender":"F","dateOfBirth":"1990-10-10","newsletterId":"idCKVbyVOAivWLar","consentFlag":true,"_id":"I5DMWQxImdKpxnOE"}
+{"email":"test@example.com","firstName":"name","gender":"F","dateOfBirth":"1990-10-10","newsletterId":"idCKVbyVOAivWLar","consentFlag":true,"_id":"O2cRnF6HzD4pgAw7"}
+{"email":"test3@example.com","firstName":"name","gender":"F","dateOfBirth":"1990-10-10","newsletterId":"idCKVbyVOAivWLad","consentFlag":true,"_id":"FUeTijftHMJG42ce"}
+{"$$deleted":true,"_id":"I5DMWQxImdKpxnOE"}
+{"email":"test@example.com","firstName":"name","gender":"F","dateOfBirth":"1990-10-10","newsletterId":"idCKVbyVOAivWLad","consentFlag":true,"_id":"cybAuPUJMhtn0WAa"}
+{"$$deleted":true,"_id":"O2cRnF6HzD4pgAw7"}
+{"$$deleted":true,"_id":"FUeTijftHMJG42ce"}
+{"$$deleted":true,"_id":"cybAuPUJMhtn0WAa"}
